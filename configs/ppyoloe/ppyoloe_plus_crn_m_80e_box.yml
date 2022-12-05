@@ -1,0 +1,37 @@
+# 基于 ppyoloe_plus_crn_m_80e_coco.yml
+_BASE_: [
+  '../runtime.yml',
+  './_base_/optimizer_80e.yml',
+  './_base_/ppyoloe_plus_crn.yml',
+  './_base_/ppyoloe_plus_reader.yml',
+]
+
+metric: VOC
+map_type: 11point
+num_classes: 2
+
+TrainDataset:
+  !VOCDataSet
+    dataset_dir: dataset/box
+    anno_path: train_list.txt
+    label_list: labels.txt
+    data_fields: ['image', 'gt_bbox', 'gt_class', 'difficult']
+
+EvalDataset:
+  !VOCDataSet
+    dataset_dir: dataset/box
+    anno_path: val_list.txt
+    label_list: labels.txt
+    data_fields: ['image', 'gt_bbox', 'gt_class', 'difficult']
+
+TestDataset:
+  !ImageFolder
+    anno_path: dataset/box/labels.txt
+
+log_iter: 100
+snapshot_epoch: 5
+weights: models/ppyoloe_plus_crn_m_80e_coco.pdparams
+
+pretrain_weights:
+depth_mult: 0.67
+width_mult: 0.75

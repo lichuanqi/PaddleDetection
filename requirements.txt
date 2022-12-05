@@ -7,7 +7,7 @@ shapely
 scipy
 terminaltables
 Cython
-pycocotools
+# pycocotools
 setuptools
 
 # for vehicleplate
